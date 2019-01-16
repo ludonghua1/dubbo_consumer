@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+       <!--dubbo:application指当前应用的名称-->
+       <dubbo:application name="dubbo_provider"/>
+       <!--指定注册中心的地址，以及连接注册中心的协议  使用广播-->
+       <dubbo:registry protocol="zookeeper" address="192.168.199.135:2181" />
+       <!--发布那个服务-->
+       <dubbo:service interface="com.yitian.service.HelloService" ref="helloService"/>
+        <!--实例化-->
+       <bean id="helloService" class="com.yitian.service.Impl.HelloServiceImpl"/>
+
+</beans>
