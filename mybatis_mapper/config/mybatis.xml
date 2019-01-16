@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!--mybatis框架的核心配置文件，需要配置jdbc相关的信息-->
+
+<!--配置-->
+<configuration>
+    <!--读取properties文件-->
+    <properties resource="jdbc.properties"/>
+    <typeAliases>
+        <package name="com.yitian.mybatis.model"/>
+        <package name="com.yitian.mybatis.vo"/>
+
+    </typeAliases>
+    <!--可以配置多个数据库环境信息-->
+    <environments default="development">
+        <!--单个数据库环境-->
+        <environment id="development">
+            <!--事物管理器，jdbc-->
+            <transactionManager type="JDBC"/>
+            <!--数据源-->
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <!--引入mapper文件，每一个mapper文件对应着某一张表的数据库操作-->
+    <mappers>
+        <mapper resource="student.xml"/>
+    </mappers>
+</configuration>

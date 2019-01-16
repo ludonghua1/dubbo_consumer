@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    <!-- mvc注解驱动,此标签包含了注解的处理器映射器以及处理器适配器,
+                 包含了json转换器
+
+     -->
+    <mvc:annotation-driven></mvc:annotation-driven>
+
+    <!-- 注解扫包器,必须得写，因为如果不写的话，那么处理器对象就不会被实例化
+    只能扫controller这一层,因为ssm整合，如果只使用一个扫包器的话，事务就失效了
+
+    -->
+    <context:component-scan base-package="com.yitian.ssm.controller"/>
+    <!--视图解析器-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <!-- 前缀 -->
+        <property name="prefix" value="/WEB-INF/pages/" />
+        <!-- 后缀 -->
+        <property name="suffix" value=".jsp" />
+    </bean>
+    <!-- 1:引入commons-io  commons-upload jar包
+         2:配置springMvc框架的文件上传解析器
+         3:文件上传必须使用表单提交 method="post" enctype="multipart/form-data"
+         4:开发处理器方法，具体看代码注释
+
+
+     -->
+
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- 设置上传文件的最大尺寸为5MB -->
+        <property name="maxUploadSize">
+            <value>5242880</value>
+        </property>
+    </bean>
+
+
+</beans>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<!--配置-->
+<configuration>
+    <!--mybatis和spring整合，由于spring本身就是一个ioc容器，所以
+    数据库连接信息交给spring来实例化-->
+    <typeAliases>
+        <package name="com.yitian.ssm.model"/>
+    </typeAliases>
+
+</configuration>

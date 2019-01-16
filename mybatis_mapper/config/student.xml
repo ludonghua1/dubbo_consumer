@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yitian.mybatis.dao.StudentDao">
+    
+    <resultMap id="studentMap" type="student">
+        <result column="tel_number" property="telNumber"/>
+    </resultMap>
+    
+    
+    <select id="findStudent" resultMap="studentMap">
+      select * from student
+    </select>
+    <insert id="insertStudent" parameterType="student">
+        insert into student(name,age,clazz,country,tel_number)values (#{name},#{age},#{clazz},#{country},#{telNumber})
+    </insert>
+    <select id="findStudentById" parameterType="int" resultMap="studentMap">
+        select * from student where id=#{id}
+    </select>
+
+    <select id="likeStudent" resultMap="studentMap" parameterType="string">
+        select * from student where name like '%${value}%'
+    </select>
+
+    <update id="updateStudent" parameterType="student">
+        update student set name=#{name}, age=#{age},birthday=#{birthday} where id=#{id}
+    </update>
+    <delete id="deleteStudent" parameterType="int">
+        delete from student where id=#{id}
+    </delete>
+    
+    <select id="findStudentVo" parameterType="studentVo" resultMap="studentMap">
+        select * from student where name=#{student.name} and age=#{student.age}
+    </select>
+
+    <select id="studentQuery" parameterType="student" resultMap="studentMap">
+        select * from student
+--         where标签有自动去除多余and的功能
+        <where>
+            <if test="name!=null and name!=''">
+                and name like '%${name}%'
+            </if>
+            <if test="age!=null and age!=0">
+                and age=#{age}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteStudentById" parameterType="Integer" >
+        delete from student
+
+    <!--<include refid="sadwq"/>-->
+        <where>
+            id in
+            <foreach collection="array" item="id" open="(" separator="," close=")" >
+                #{id}
+            </foreach>
+        </where>
+    </delete>
+
+    <sql id="sadwq">
+        <where>
+            <if test="name!=null and name!=''">
+                and name like '%${name}%'
+            </if>
+        </where>
+    </sql>
+</mapper>

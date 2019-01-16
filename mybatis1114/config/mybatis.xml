@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!-- mybatis框架的核心配置文件，需要配置jdbc相关的信息 -->
+
+<!-- 配置 -->
+<configuration>
+    <!-- 读取properties文件 -->
+    <properties resource="jdbc.properties"/>
+    <!--设置配置-->
+    <settings>
+        <!--开启二级缓存-->
+        <setting name="cacheEnabled" value="true"/>
+        <!-- 打开延迟加载的开关 -->
+        <setting name="lazyLoadingEnabled" value="true" />
+        <!-- 将积极加载改为消极加载，即延迟加载 -->
+        <setting name="aggressiveLazyLoading" value="false" />
+    </settings>
+
+    <typeAliases>
+        <!-- 两种方式:单个定义，批量定义 -->
+        <package name="com.yitian.mybatis.model"/>
+        <package name="com.yitian.mybatis.vo"/>
+
+    </typeAliases>
+    <!-- 可以配置多个数据库环境信息 -->
+    <environments default="development">
+        <!-- 单个数据库环境 -->
+        <environment id="development">
+            <!-- 事务管理器，jdbc的事务管理器 -->
+            <transactionManager type="JDBC"/>
+            <!-- 数据源，这里使用数据库连接池 -->
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!-- 引入mapper文件，每一个mapper文件对应着对某一张表的数据库操作 -->
+    <mappers>
+        <!-- 单个引用映射文件 -->
+        <!-- <mapper resource="user.xml"/> -->
+        <!-- 注意事项：如果批量引入映射文件的话，需要将映射文件放到dao接口那个包，而且名称和接口名一致 -->
+        <package name="com.yitian.mybatis.mapper" />
+    </mappers>
+</configuration>
